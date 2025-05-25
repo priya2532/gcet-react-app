@@ -1,13 +1,8 @@
-export default function Product(props) {
-  const name = props.value?.name || props.name;
-  const price = props.value?.price || props.price;
+import React from 'react'
 
+export default function Product() {
   return (
-    <div>
-      <h2>{name}</h2>
-      <h3>{price}</h3>
-      <button>Add to Cart</button>
-    </div>
-  );
+    <div>Product List</div>
+  )
 }
  

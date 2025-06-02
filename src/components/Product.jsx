@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { AppContext } from '../App'; // adjust the path if needed
 
 export default function Product() {
-  const username = localStorage.getItem("user");
+  const { user } = useContext(AppContext);
+  const [products, setProducts] = useState([]);
+
+  // Fetch products from backend
+  useEffect(() => {
+    axios.get('http://localhost:8080/products')
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+      });
+  }, []);
 
   return (
-    <div style={{ textAlign: "center", marginTop: 50, fontSize: "20px" }}>
-      Welcome to the Online Store{username ? `, ${username}` : ""}
+    <div>
+      <h3>Welcome {user.name}!</h3>
+      <h4>Product List:</h4>
+      <ul>
+        {products.map(prod => (
+          <li key={prod.id}>
+            {prod.name} - ₹{prod.price}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

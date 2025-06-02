@@ -12,12 +12,12 @@ export default function Product() {
   useEffect(() => {
     fetchProduct();
   }, []);
-  
+
   return (
     <div>
       <h3>Welcome {user.name}! </h3>
       Product List
-      {product && product.map((value) => <li>{value.name}</li>)}
+      {product && product.map((value) => <li>{value.name}- ₹{value.price}</li>)}
     </div>
   );
 }

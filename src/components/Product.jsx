@@ -5,10 +5,10 @@ import axios from "axios";
 export default function Product() {
   const { user } = useContext(AppContext);
   const [product, setProduct] = useState([]);
-  const API=import.meta.env.VITE_API-URL;
+  const API=import.meta.env.VITE_API_URL;
   const fetchProduct = async () => {
     const res = await axios.get(`${API}/product`);
-    setProduct(res.data);
+    setProduct(res.data.data);
   };
   useEffect(() => {
     fetchProduct();

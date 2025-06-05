@@ -9,10 +9,11 @@ export default function Register() {
   const Navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL;
   const handleSubmit = async () => {
-    //setUsers([...users, user]);
+    
     try {
       const url = `${API}/users/register`;
       await axios.post(url, user);
+      setUsers([...users, user]);
       Navigate("/login");
     } catch (err) {
       console.log(err);
@@ -44,12 +45,6 @@ export default function Register() {
       </p>
       <button onClick={handleSubmit}>Submit</button>
       <hr />
-      {users &&
-        users.map((value) => (
-          <li>
-            {value.name}-{value.email}-{value.pass}
-          </li>
-        ))}
     </div>
   );
 }

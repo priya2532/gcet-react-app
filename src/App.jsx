@@ -18,17 +18,21 @@ function App() {
   const[cart,setCart]=useState([]);
 
   const addToCart = (product) => {
-    setCart(prevCart => {
-      const existing = prevCart.find(item => item._id === product._id);
-      if (existing) {
-        return prevCart.map(item =>
-          item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
-    });
-  };
+  setCart(prevCart => {
+    const existing = prevCart.find(item => item._id === product._id);
+    let newCart;
+    if (existing) {
+      newCart = prevCart.map(item =>
+        item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      newCart = [...prevCart, { ...product, quantity: 1 }];
+    }
+    console.log("Cart updated:", newCart);
+    return newCart;
+  });
+};
+
 
   return (
     <AppContext.Provider value={{ users, setUsers, user, setUser,cart,addToCart }}>

@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { AppContext } from "../App";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 export default function Register() {
   const { users, setUsers } = useContext(AppContext);
   const [user, setUser] = useState({});
-const Navigate = useNavigate()
-  const handleSubmit = () => {
-    setUsers([...users, user]);
-    Navigate("/login")
+  const navigate = useNavigate();
+
+  const API = import.meta.env.VITE_API_URL || "https://gcet-node-app-five.vercel.app/";
+
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post(`${API}/users/register`, user);
+
+      // Optionally store in frontend context
+      setUsers([...users, user]);
+
+      alert("Registration successful!");
+      navigate("/login");
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert("Registration failed. Please try again.");
+    }
   };
+
   return (
     <div style={{ margin: "30px" }}>
       <h3>Register</h3>
@@ -35,10 +50,14 @@ const Navigate = useNavigate()
         />
       </p>
       <button onClick={handleSubmit}>Submit</button>
+
       <hr />
-      {users && users.map(value=>(
-        <li>{value.name}-{value.email}-{value.pass}</li>
-      ))}
+      {users &&
+        users.map((value, index) => (
+          <li key={index}>
+            {value.name} - {value.email} - {value.pass}
+          </li>
+        ))}
     </div>
   );
 }

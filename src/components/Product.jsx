@@ -8,8 +8,9 @@ export default function Product() {
   const [products, setProducts] = useState([]);
   const API = import.meta.env.VITE_API_URL;
   const fetchProducts = async () => {
-    const res = await axios.get(`${API}/products/all`);
-    
+    //const res = await axios.get(`${API}/products/all`);
+    const res = await axios.get(`https://gcet-node-app-five.vercel.app/products/all`);
+    console.groupCollapsed(res.data);
     setProducts(res.data);
   };
   useEffect(() => {

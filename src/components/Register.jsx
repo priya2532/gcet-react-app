@@ -1,50 +1,38 @@
-import React, { useState } from "react";
-import { AppContext } from "../App";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 import axios from "axios";
-export default function Register() {
-  const { users, setUsers } = useContext(AppContext);
-  const [user, setUser] = useState({});
-  const Navigate = useNavigate();
+import "./Product.css";
+export default function Product() {
+  const { user, products, setProducts, cart, setCart } = useContext(AppContext);
+  // const [products, setProducts] = useState([]);
   const API = import.meta.env.VITE_API_URL;
-  const handleSubmit = async () => {
-    
-    try {
-      const url = `${API}/users/register`;
-      await axios.post(url, user);
-      setUsers([...users, user]);
-      Navigate("/login");
-    } catch (err) {
-      console.log(err);
-    }
+  const fetchProducts = async () => {
+    const res = await axios.get(`${API}/products/all`);
+    setProducts(res.data);
   };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const addToCart = (id) => {
+    !cart[id] && setCart({ ...cart, [id]: 1 });
+    
+  };
+
   return (
-    <div style={{ margin: "30px" }}>
-      <h3>Register</h3>
-      <p>
-        <input
-          type="text"
-          placeholder="Name"
-          onChange={(e) => setUser({ ...user, name: e.target.value })}
-        />
-      </p>
-      <p>
-        <input
-          type="text"
-          placeholder="Email address"
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
-        />
-      </p>
-      <p>
-        <input
-          type="password"
-          placeholder="New Password"
-          onChange={(e) => setUser({ ...user, pass: e.target.value })}
-        />
-      </p>
-      <button onClick={handleSubmit}>Submit</button>
-      <hr />
+    <div>
+      <h3>Welcome {user.name}! </h3>
+      <div className="App-Product-Row">
+        {products &&
+          products.map((value) => (
+            <div key={value._id}>
+              <h3>{value.name}</h3>
+              <h4>{value.price}</h4>
+              <button onClick={() => addToCart(value.pid)}>Add to Cart</button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

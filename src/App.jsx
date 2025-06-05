@@ -15,9 +15,23 @@ export const AppContext = createContext();
 function App() {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({}); // Logged-in user
+  const[cart,setCart]=useState([]);
+
+  const addToCart = (product) => {
+    setCart(prevCart => {
+      const existing = prevCart.find(item => item._id === product._id);
+      if (existing) {
+        return prevCart.map(item =>
+          item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
 
   return (
-    <AppContext.Provider value={{ users, setUsers, user, setUser }}>
+    <AppContext.Provider value={{ users, setUsers, user, setUser,cart,addToCart }}>
       <BrowserRouter>
         <Header />
 

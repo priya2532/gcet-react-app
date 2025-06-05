@@ -25,7 +25,7 @@ export default function Product() {
             <div key={value._id}>
               <h3>{value.name}</h3>
               <h4>{value.price}</h4>
-              <button>Add to Cart</button>
+              <button onClick={() => addToCart(value)}>Add to Cart</button>
             </div>
           ))}
       </div>

@@ -1,4 +1,4 @@
-App-Product-Row {
+.App-Product-Row {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

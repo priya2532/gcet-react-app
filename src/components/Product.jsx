@@ -4,7 +4,7 @@ import { AppContext } from "../App";
 import axios from "axios";
 import "./Product.css"
 export default function Product() {
-  const { user } = useContext(AppContext);
+  const { user,addToCart } = useContext(AppContext);
   const [products, setProducts] = useState([]);
   const API = import.meta.env.VITE_API_URL;
   const fetchProducts = async () => {

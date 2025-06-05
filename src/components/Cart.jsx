@@ -10,8 +10,9 @@ export default function Cart() {
   return (
     <div>
       <h2>My Cart</h2>
+      <div classNmae="cart-container"></div>
       {cart.map(item => (
-        <div key={item._id}>
+        <div key={item._id} className="cart-item">
           <h3>{item.name}</h3>
           <p>Price: ₹{item.price}</p>
           <p>Quantity: {item.quantity}</p>

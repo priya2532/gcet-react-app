@@ -8,7 +8,7 @@ export default function Product() {
   // const [products, setProducts] = useState([]);
   const API = import.meta.env.VITE_API_URL;
   const fetchProducts = async () => {
-    const res = await axios.get(`https://gcet-node-app-five.vercel.app//products/all`);
+    const res = await axios.get(`https://gcet-node-app-five.vercel.app/products/all`);
     setProducts(res.data);
   };
   useEffect(() => {
@@ -16,7 +16,18 @@ export default function Product() {
   }, []);
 
   const addToCart = (id) => {
-    !cart[id] && setCart({ ...cart, [id]: 1 });
+      const existingItem = cart.find(item => item._id === product._id);
+  
+  let updatedCart;
+  if (existingItem) {
+    updatedCart = cart.map(item =>
+      item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+  } else {
+    updatedCart = [...cart, { ...product, quantity: 1 }];
+  }
+
+  setCart(updatedCart);
     
   };
 
@@ -29,7 +40,7 @@ export default function Product() {
             <div key={value._id}>
               <h3>{value.name}</h3>
               <h4>{value.price}</h4>
-              <button onClick={() => addToCart(value.pid)}>Add to Cart</button>
+              <button onClick={() => addToCart(value)}>Add to Cart</button>
             </div>
           ))}
       </div>

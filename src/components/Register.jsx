@@ -8,11 +8,11 @@ export default function Register() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
-  const API = import.meta.env.VITE_API_URL || "https://gcet-node-app-five.vercel.app";
+  //const API = import.meta.env.VITE_API_URL || "https://gcet-node-app-five.vercel.app";
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post(`${API}/users/register`, user);
+      const res = await axios.post(`https://gcet-node-app-five.vercel.app/users/register`, user);
 
       // Optionally store in frontend context
       setUsers([...users, user]);

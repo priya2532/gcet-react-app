@@ -10,7 +10,7 @@ export default function Login() {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post("https://gcet-node-app-lake.five.app/users/login", {
+      const res = await axios.post("https://gcet-node-app-five.vercel.app/users/login", {
         email: user.email,
         pass: user.pass,
       });

@@ -10,27 +10,28 @@ export default function Product() {
   const fetchProducts = async () => {
     const res = await axios.get(`https://gcet-node-app-five.vercel.app/products/all`);
     setProducts(res.data);
+    console.log(res.data);
   };
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const addToCart = (id) => {
-      const existingItem = cart.find(item => item._id === product._id);
-  
-  let updatedCart;
-  if (existingItem) {
-    updatedCart = cart.map(item =>
-      item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
-    );
-  } else {
-    updatedCart = [...cart, { ...product, quantity: 1 }];
-  }
+  const addToCart = (product) => {
+        const existingItem = cart.find(item => item._id === product._id);
 
-  setCart(updatedCart);
-    
-  };
+    let updatedCart;
+    if (existingItem) {
+      updatedCart = cart.map(item =>
+        item._id === product._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedCart = [...cart, { ...product, quantity: 1 }];
+    }
 
+    setCart(updatedCart);
+};
   return (
     <div>
       <h3>Welcome {user.name}! </h3>

@@ -49,6 +49,7 @@ export default function Orders() {
                 marginBottom: "15px",
                 borderRadius: "8px",
                 backgroundColor: "#f9f9f9",
+                color:"#222",
               }}
             >
               <p><strong>Email:</strong> {order.email}</p>

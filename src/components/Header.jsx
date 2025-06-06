@@ -1,18 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { AppContext } from "../App";
+import { Link } from "react-router-dom";
 
 export default function Header() {
+  const { user } = useContext(AppContext);
+
+  const linkStyle = {
+    color: "white",
+    marginRight: "20px",
+    textDecoration: "none",
+  };
+
   return (
-    <div style={{ backgroundColor: "#4db8ff", padding: "15px" }}>
-      <h1 style={{ backgroundColor: "#ffb3b3", padding: "10px", borderRadius: "10px" }}>
-        My Online Shop
-      </h1>
-      <nav style={{ fontSize: "18px" }}>
-        <Link to="/" style={{ margin: "0 10px" }}>Home</Link>
-        <Link to="/cart" style={{ margin: "0 10px" }}>Cart</Link>
-        <Link to="/login" style={{ margin: "0 10px" }}>Login</Link>
+    <header style={{ backgroundColor: "#0d6efd", padding: "15px" }}>
+      <div style={{ color: "white", fontSize: "1.5rem", marginBottom: "10px" }}>
+         My Online Shop
+      </div>
+      <nav>
+        <Link to="/" style={linkStyle}>Home</Link>
+        <Link to="/cart" style={linkStyle}>Cart</Link>
+        {user.token ? (
+          <Link to="/logout" style={linkStyle}>Logout</Link>
+        ) : (
+          <Link to="/login" style={linkStyle}>Login</Link>
+        )}
+        <Link to="/orders" style={linkStyle}>Orders</Link>
       </nav>
-      <hr />
-    </div>
+    </header>
   );
 }
